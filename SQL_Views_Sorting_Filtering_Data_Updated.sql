@@ -20,8 +20,7 @@ VALUES
 
 -- Create a view bulgarian_customers_addresses which contains only addreses in Bulgaria;
 CREATE VIEW bulgarian_customers_addresses AS
-SELECT address
-FROM customers_addresses
+SELECT * FROM customers_addresses
 WHERE country = 'Bulgaria';
 
 -- Drop the view
@@ -29,7 +28,7 @@ DROP VIEW bulgarian_customers_addresses;
 
 -- Filtering customers_addresses data
 -- get a list of countries ordered alphabetically
-SELECT country FROM customers_addresses
+SELECT DISTINCT country FROM customers_addresses
 ORDER BY country;
 
 -- Inserting some cities strating with the same letter (needed for the next task)
@@ -44,10 +43,17 @@ DELETE FROM customers_addresses WHERE city = 'Pleven';
 SELECT city FROM customers_addresses
 WHERE city LIKE 'P%';
 
--- get 3 different random cities located in Bulgaria
+-- get 3 random cities located in Bulgaria
 SELECT city FROM customers_addresses
 WHERE country = 'Bulgaria'
 ORDER BY RANDOM()
+LIMIT 3;
+
+-- get 3 random DIFFERENT cities located in Bulgaria
+SELECT * FROM (SELECT DISTINCT city
+FROM customers_addresses
+WHERE country = 'Bulgaria') AS different_random_cities
+ORDER BY RANDOM() 
 LIMIT 3;
 
 -- Inserting a record for Varna (needed for the next task)
@@ -78,5 +84,5 @@ ORDER BY address DESC LIMIT 10;
 
 -- get addresses that have 4-digit postal code that start with 3 and end with 7. Order the result alpabetically by country and city
 SELECT address,country,city FROM customers_addresses
-WHERE postal_code ::TEXT LIKE '3_%_%7'
+WHERE postal_code ::TEXT LIKE '3__7'
 ORDER BY country,city;
