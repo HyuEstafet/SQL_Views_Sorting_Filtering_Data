@@ -50,7 +50,7 @@ ORDER BY RANDOM()
 LIMIT 3;
 
 -- get 3 random DIFFERENT cities located in Bulgaria
-SELECT * FROM (SELECT DISTINCT city
+SELECT  * FROM (SELECT DISTINCT city
 FROM customers_addresses
 WHERE country = 'Bulgaria') AS different_random_cities
 ORDER BY RANDOM() 
@@ -76,13 +76,13 @@ VALUES
 ('7 Svoboda str','Plovdiv','Plovdiv',NULL,4010,'Bulgaria');
 
 -- get last 10 added customer addresses with a province and address filled, but without a state value
-SELECT address FROM customers_addresses
+SELECT * FROM customers_addresses
 WHERE province IS NOT NULL
 AND address IS NOT NULL
 AND state IS NULL
-ORDER BY address DESC LIMIT 10;
+ORDER BY customer_addresses_id DESC LIMIT 10;
 
 -- get addresses that have 4-digit postal code that start with 3 and end with 7. Order the result alpabetically by country and city
-SELECT address,country,city FROM customers_addresses
+SELECT * FROM customers_addresses
 WHERE postal_code ::TEXT LIKE '3__7'
 ORDER BY country,city;
